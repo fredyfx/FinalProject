@@ -68,7 +68,7 @@ namespace MyMusic
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Songs/Error");
             }
 
             app.UseStaticFiles();
@@ -81,7 +81,7 @@ namespace MyMusic
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Songs}/{action=Index}/{id?}");
             });
 
             SeedData.InitializeDb(app.ApplicationServices);
