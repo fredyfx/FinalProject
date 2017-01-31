@@ -5,74 +5,80 @@
 }
 
 <h2>My Favorite Songs</h2>
-<h4><em>At the moment at least</em></h4>
+<h4><em>For The Moment At Least</em></h4>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
 <!-- add method of http get so search queries can be saved/bookmarked -->
-<form asp-controller="Songs" asp-action="Index" method="get">
-    <!-- now when you search the URL is updated with the query string -->
-    <p>
-        <select asp-for="songGenre" asp-items="Model.genres">
-            <option value="">All</option>
-        </select>
-
-        <strong>Title: </strong><input type="text" name="TitleString">
-        <input type="submit" value="Filter" />
-
-        <strong>Artist: </strong><input type="text" name="ArtistString">
-        <input type="submit" value="Filter" />
-    </p>
+<form asp-controller="Songs" asp-action="Index" method="get" class="form-inline">
+    <div class="form-group">
+        <!-- now when you search the URL is updated with the query string -->
+        <p>
+            <strong>Genre:</strong>
+            <select asp-for="songGenre" asp-items="Model.genres" class="form-control">
+                <option value="">All</option>
+            </select>
+            <strong>Title: </strong><input type="text" name="TitleString" class="form-control">
+            <strong>Artist: </strong><input type="text" name="ArtistString" class="form-control">
+            <strong>Album: </strong><input type="text" name="ArtistString" class="form-control">
+            <br />
+            <br />
+            <input type="submit" value="Filter" class="form-control btn btn-primary btn-block">
+        </p>
+    </div>
 </form>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.songs[0].Album)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.songs[0].Artist)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.songs[0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.songs[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.songs[0].Year)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.songs) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.songs[0].Album)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.songs[0].Artist)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.songs[0].Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.songs[0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.songs[0].Year)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.songs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Album)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Artist)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
