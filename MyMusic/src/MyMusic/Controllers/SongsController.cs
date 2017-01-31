@@ -20,9 +20,18 @@ namespace MyMusic.Controllers
         }
 
         // GET: Songs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Song.ToListAsync());
+            var songs = from s in _context.Song
+                        select s;
+             
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                songs = songs.Where(s => s.Title.Contains(searchString));
+            }
+
+            //return View(await _context.Song.ToListAsync());
+            return View(await songs.ToListAsync());
         }
 
         // GET: Songs/Details/5
