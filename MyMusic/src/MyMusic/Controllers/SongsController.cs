@@ -20,18 +20,36 @@ namespace MyMusic.Controllers
         }
 
         // GET: Songs
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string songGenre, string searchString)
         {
+            // LINQ to obtain a list of genres for a selectList for users
+            IQueryable<string> genreQuery = from s in _context.Song
+                                            orderby s.Genre
+                                            select s.Genre;
+
+            // LINQ to select songs
             var songs = from s in _context.Song
                         select s;
-             
+            
+            // check if string isn't null, then run a query to check for matches with title 
             if (!string.IsNullOrEmpty(searchString))
             {
                 songs = songs.Where(s => s.Title.Contains(searchString));
             }
 
-            //return View(await _context.Song.ToListAsync());
-            return View(await songs.ToListAsync());
+            if (!string.IsNullOrEmpty(songGenre))
+            {
+                songs = songs.Where(s => s.Genre == songGenre);
+            }
+
+            // create a song genre view model to be rendered based on client choice
+            var songGenreViewModel = new SongGenreViewModel();
+            // only assign the view model if a query is created, and use distinct to ensure no duplicates
+            songGenreViewModel.genres = new SelectList(await genreQuery.Distinct().ToListAsync());
+            // also update songs list to reflect query
+            songGenreViewModel.songs = await songs.ToListAsync();
+
+            return View(songGenreViewModel);
         }
 
         // GET: Songs/Details/5
