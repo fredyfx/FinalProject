@@ -20,7 +20,7 @@ namespace MyMusic.Controllers
         }
 
         // GET: Songs
-        public async Task<IActionResult> Index(string songGenre, string searchString)
+        public async Task<IActionResult> Index(string songGenre, string titleString, string artistString)
         {
             // LINQ to obtain a list of genres for a selectList for users
             IQueryable<string> genreQuery = from s in _context.Song
@@ -32,14 +32,20 @@ namespace MyMusic.Controllers
                         select s;
             
             // check if string isn't null, then run a query to check for matches with title 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(titleString))
             {
-                songs = songs.Where(s => s.Title.Contains(searchString));
+                songs = songs.Where(s => s.Title.Contains(titleString));
             }
 
+            // query for song's Genre
             if (!string.IsNullOrEmpty(songGenre))
             {
                 songs = songs.Where(s => s.Genre == songGenre);
+            }
+
+            if (!string.IsNullOrEmpty(artistString))
+            {
+                songs = songs.Where(s => s.Artist.Contains(artistString));
             }
 
             // create a song genre view model to be rendered based on client choice
