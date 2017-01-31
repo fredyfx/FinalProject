@@ -8,4 +8,4 @@ Goals:
 - Apply a shared layout that renders a body inside the layout rather than recreating it for every page.
 - Learn and apply the concepts of MVC while gaining experiencing in ASP.NET MVC Core and Entity Framework Core.
 
-[image of site](./MyMusic.PNG)
+![image of site](./MyMusic.PNG)
