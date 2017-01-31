@@ -11,4 +11,4 @@ Goals:
 - Create a layout that is responsive, mobile ready, and easy to use.
 
 Here's the app from a desktop view:
-![image of site](./MyMusic.PNG)
+![image of site](./MyMusicDesktopView.PNG)
