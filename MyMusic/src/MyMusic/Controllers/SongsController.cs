@@ -74,6 +74,8 @@ namespace MyMusic.Controllers
                 return NotFound();
             }
 
+            // SingleOrDefaultAsync has built in security, it won't do anything unless
+            // a song has indeed been found.
             var song = await _context.Song.SingleOrDefaultAsync(m => m.ID == id);
             if (song == null)
             {
@@ -164,20 +166,25 @@ namespace MyMusic.Controllers
                 return NotFound();
             }
 
+            // note that delete has extra security, it uses SingleOrDefaultAsync()
             var song = await _context.Song.SingleOrDefaultAsync(m => m.ID == id);
             if (song == null)
             {
                 return NotFound();
             }
 
+            // it returns another view in which DeleteConfirmed() can actually alter data
             return View(song);
         }
 
         // POST: Songs/Delete/5
+
+        // including ActionName("Delete") fixes any routing issues from overloaded methods with the same parameter signature
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // DeleteConfirmed() is a POST request vs the less secure GET request from Delete()
             var song = await _context.Song.SingleOrDefaultAsync(m => m.ID == id);
             _context.Song.Remove(song);
             await _context.SaveChangesAsync();
